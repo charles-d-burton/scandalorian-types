@@ -4,6 +4,7 @@ import "strconv"
 
 type Scan interface {
 	SetDefaults(scan *Scan)
+	GetStream() string
 }
 
 //ScanRequest object instructing system on how to scan.
@@ -56,6 +57,10 @@ func (ps *PortScan) SetDefaults(scan *ScanMetaData) {
 	}
 }
 
+func (ps *PortScan) GetStream() string {
+	return discoveryStream
+}
+
 //Top Level Object to define application level scanning
 type ApplicationScan struct {
 	ScanMetaData
@@ -69,4 +74,8 @@ func (ps *ApplicationScan) SetDefaults(scan *ScanMetaData) {
 	ps.IP = scan.IP
 	ps.ScanID = scan.ScanID
 	ps.RequestID = scan.RequestID
+}
+
+func (ps *ApplicationScan) GetStream() string {
+	return applicationStream
 }
