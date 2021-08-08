@@ -31,6 +31,12 @@ type PortScanOptions struct {
 	Ports       []string `json:"ports,omitempty"`
 }
 
+func (ps *PortScan) SetDefaults(scan *Scan) {
+	ps.IP = scan.IP
+	ps.ScanID = scan.ScanID
+	ps.RequestID = scan.RequestID
+}
+
 //Top Level Object to define application level scanning
 type ApplicationScan struct {
 	Scan
@@ -41,4 +47,10 @@ type ApplicationScanOptions struct {
 	Flags       BaseFlags `json:"flags"`
 	UDPFlags    UDPFlags  `json:"udp_flags,omitempty"`
 	HttpOptions *Http     `json:"http_options,omitempty"`
+}
+
+func (ps *ApplicationScan) SetDefaults(scan *Scan) {
+	ps.IP = scan.IP
+	ps.ScanID = scan.ScanID
+	ps.RequestID = scan.RequestID
 }
