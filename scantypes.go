@@ -2,7 +2,7 @@ package scandaloriantypes
 
 import "strconv"
 
-type Processor interface {
+type Scan interface {
 	SetDefaults(scan *Scan)
 }
 
@@ -15,7 +15,7 @@ type ScanRequest struct {
 }
 
 //Scan structure to send to message queue for scanning
-type Scan struct {
+type ScanMetaData struct {
 	IP        string `json:"ip"`
 	ScanID    string `json:"scan_id"`
 	RequestID string `json:"request_id"`
@@ -24,7 +24,7 @@ type Scan struct {
 
 //Top level object to define a port scan
 type PortScan struct {
-	Scan
+	ScanMetaData
 	Run         bool     `json:"run"`
 	PPS         int      `json:"pps,omitempty"` //Set rate limiter value
 	Ports       []string `json:"ports,omitempty"`
@@ -34,7 +34,7 @@ type PortScan struct {
 	//Errors      []string `json:"errors,omitempty"`
 }
 
-func (ps *PortScan) SetDefaults(scan *Scan) {
+func (ps *PortScan) SetDefaults(scan *ScanMetaData) {
 	ps.IP = scan.IP
 	ps.ScanID = scan.ScanID
 	ps.RequestID = scan.RequestID
@@ -58,14 +58,14 @@ func (ps *PortScan) SetDefaults(scan *Scan) {
 
 //Top Level Object to define application level scanning
 type ApplicationScan struct {
-	Scan
+	ScanMetaData
 	Run         bool      `json:"run"`
 	Flags       BaseFlags `json:"flags"`
 	UDPFlags    UDPFlags  `json:"udp_flags,omitempty"`
 	HttpOptions *Http     `json:"http_options,omitempty"`
 }
 
-func (ps *ApplicationScan) SetDefaults(scan *Scan) {
+func (ps *ApplicationScan) SetDefaults(scan *ScanMetaData) {
 	ps.IP = scan.IP
 	ps.ScanID = scan.ScanID
 	ps.RequestID = scan.RequestID
