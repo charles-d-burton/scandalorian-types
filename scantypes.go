@@ -2,6 +2,10 @@ package scandaloriantypes
 
 import "strconv"
 
+type Processor interface {
+	SetDefaults(scan *Scan)
+}
+
 //ScanRequest object instructing system on how to scan.
 type ScanRequest struct {
 	Address         string           `json:"address,omitempty"`
@@ -21,15 +25,13 @@ type Scan struct {
 //Top level object to define a port scan
 type PortScan struct {
 	Scan
+	Run         bool     `json:"run"`
 	PPS         int      `json:"pps,omitempty"` //Set rate limiter value
 	Ports       []string `json:"ports,omitempty"`
 	TopTen      bool     `json:"top_ten,omitempty"`
 	TopHundred  bool     `json:"top_hundred,omitempty"`
 	TopThousand bool     `json:"top_thousand,omitempty"`
-}
-
-//PortScanOptions optional parameters to set for a scan
-type PortScanOptions struct {
+	//Errors      []string `json:"errors,omitempty"`
 }
 
 func (ps *PortScan) SetDefaults(scan *Scan) {
@@ -57,6 +59,7 @@ func (ps *PortScan) SetDefaults(scan *Scan) {
 //Top Level Object to define application level scanning
 type ApplicationScan struct {
 	Scan
+	Run         bool      `json:"run"`
 	Flags       BaseFlags `json:"flags"`
 	UDPFlags    UDPFlags  `json:"udp_flags,omitempty"`
 	HttpOptions *Http     `json:"http_options,omitempty"`
