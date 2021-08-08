@@ -3,7 +3,7 @@ package scandaloriantypes
 import "strconv"
 
 type Scan interface {
-	SetDefaults(scan *Scan)
+	SetDefaults(scan *ScanMetaData)
 	GetStream() string
 }
 
