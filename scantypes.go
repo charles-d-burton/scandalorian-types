@@ -32,7 +32,7 @@ type PortScan struct {
 	TopTen      bool     `json:"top_ten,omitempty"`
 	TopHundred  bool     `json:"top_hundred,omitempty"`
 	TopThousand bool     `json:"top_thousand,omitempty"`
-	//Errors      []string `json:"errors,omitempty"`
+	Errors      []string `json:"errors,omitempty"`
 }
 
 func (ps *PortScan) SetDefaults(scan *ScanMetaData) {
