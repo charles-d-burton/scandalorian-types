@@ -39,9 +39,7 @@ func (ps *PortScan) SetDefaults(scan *ScanMetaData) {
 	ps.IP = scan.IP
 	ps.ScanID = scan.ScanID
 	ps.RequestID = scan.RequestID
-	if ps.PPS == 0 {
-		ps.PPS = 4000
-	}
+
 	if len(ps.Ports) == 0 {
 		/*
 			Not Yet Implemented
