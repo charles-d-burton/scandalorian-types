@@ -1,7 +1,5 @@
 package scandaloriantypes
 
-import "strconv"
-
 type Scan interface {
 	SetDefaults(scan *ScanMetaData)
 	GetStream() string
@@ -9,7 +7,6 @@ type Scan interface {
 
 //ScanRequest object instructing system on how to scan.
 type ScanRequest struct {
-	Address         string           `json:"address,omitempty"`
 	Host            string           `json:"host,omitempty"`
 	PortScan        *PortScan        `json:"port_scan,omitempty"`
 	ApplicationScan *ApplicationScan `json:"application_scan,omitempty"`
@@ -39,20 +36,6 @@ func (ps *PortScan) SetDefaults(scan *ScanMetaData) {
 	ps.IP = scan.IP
 	ps.ScanID = scan.ScanID
 	ps.RequestID = scan.RequestID
-
-	if len(ps.Ports) == 0 {
-		/*
-			Not Yet Implemented
-			if ps.TopTen {
-
-			}
-			if ps.TopHundred{}
-			if ps.TopThousand{}
-		*/
-		for i := 0; i <= 65535; i++ {
-			ps.Ports = append(ps.Ports, strconv.Itoa(i))
-		}
-	}
 }
 
 func (ps *PortScan) GetStream() string {
