@@ -23,13 +23,14 @@ type ScanMetaData struct {
 //Top level object to define a port scan
 type PortScan struct {
 	ScanMetaData
-	Run         bool     `json:"run"`
-	PPS         int      `json:"pps,omitempty"` //Set rate limiter value
-	Ports       []string `json:"ports,omitempty"`
-	TopTen      bool     `json:"top_ten,omitempty"`
-	TopHundred  bool     `json:"top_hundred,omitempty"`
-	TopThousand bool     `json:"top_thousand,omitempty"`
-	Errors      []string `json:"errors,omitempty"`
+	Run                    bool     `json:"run"`
+	PPS                    int      `json:"pps,omitempty"` //Set rate limiter value
+	Ports                  []string `json:"ports,omitempty"`
+	TopTen                 bool     `json:"top_ten,omitempty"`
+	TopHundred             bool     `json:"top_hundred,omitempty"`
+	TopThousand            bool     `json:"top_thousand,omitempty"`
+	HostScanTimeoutSeconds int      `json:"host_scan_timeout_seconds"`
+	Errors                 []string `json:"errors,omitempty"`
 }
 
 func (ps *PortScan) SetDefaults(scan *ScanMetaData) {
