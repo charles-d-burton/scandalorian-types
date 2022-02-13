@@ -25,7 +25,7 @@ type PortScan struct {
 	ScanMetaData
 	Run                    bool     `json:"run"`
 	PPS                    int      `json:"pps,omitempty"` //Set rate limiter value
-	Ports                  []string `json:"ports,omitempty"`
+	Ports                  []int    `json:"ports,omitempty"`
 	TopTen                 bool     `json:"top_ten,omitempty"`
 	TopHundred             bool     `json:"top_hundred,omitempty"`
 	TopThousand            bool     `json:"top_thousand,omitempty"`
