@@ -5,14 +5,16 @@ type Scan interface {
 	GetStream() string
 }
 
-//ScanRequest object instructing system on how to scan.
+// ScanRequest object instructing system on how to scan.
 type ScanRequest struct {
-	Host            string           `json:"host,omitempty"`
-	PortScan        *PortScan        `json:"port_scan,omitempty"`
-	ApplicationScan *ApplicationScan `json:"application_scan,omitempty"`
+	Host            string            `json:"host"`
+	Company         string            `json:"company"`
+	PortScan        *PortScan         `json:"port_scan,omitempty"`
+	ApplicationScan *ApplicationScan  `json:"application_scan,omitempty"`
+	CustomMeta      map[string]string `json:"custom_meta,omitempty"`
 }
 
-//Scan structure to send to message queue for scanning
+// Scan structure to send to message queue for scanning
 type ScanMetaData struct {
 	IP        string `json:"ip"`
 	ScanID    string `json:"scan_id"`
@@ -20,11 +22,11 @@ type ScanMetaData struct {
 	Stream    string `json:"-"`
 }
 
-//Top level object to define a port scan
+// Top level object to define a port scan
 type PortScan struct {
 	ScanMetaData
 	Run                    bool     `json:"run"`
-	PPS                    int      `json:"pps,omitempty"` //Set rate limiter value
+	PPS                    int      `json:"pps,omitempty"` // Set rate limiter value
 	Ports                  []int    `json:"ports,omitempty"`
 	TopTen                 bool     `json:"top_ten,omitempty"`
 	TopHundred             bool     `json:"top_hundred,omitempty"`
@@ -43,7 +45,7 @@ func (ps *PortScan) GetStream() string {
 	return discoveryStream
 }
 
-//Top Level Object to define application level scanning
+// Top Level Object to define application level scanning
 type ApplicationScan struct {
 	ScanMetaData
 	Run         bool      `json:"run"`
