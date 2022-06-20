@@ -27,15 +27,6 @@ type ScanMetaData struct {
 	Stream     string     `json:"-"`
 }
 
-func (sr *ScanRequest) GenerateScanMeta(requestID string) ScanMetaData {
-	var meta ScanMetaData
-	meta.IP = sr.Host
-	meta.Domain = sr.FQDN
-	meta.RequestID = requestID
-	meta.CustomMeta = sr.CustomMeta
-	return meta
-}
-
 // Top level object to define a port scan
 type PortScan struct {
 	ScanMetaData
@@ -49,6 +40,11 @@ type PortScan struct {
 	Errors                 []string `json:"errors,omitempty"`
 }
 
+func (ps *PortScan) SetDefaults(scan *ScanMetaData) {
+	ps.IP = scan.IP
+	ps.RequestID = scan.RequestID
+}
+
 func (ps *PortScan) GetStream() string {
 	return discoveryStream
 }
@@ -60,6 +56,11 @@ type ApplicationScan struct {
 	Flags       BaseFlags `json:"flags"`
 	UDPFlags    UDPFlags  `json:"udp_flags,omitempty"`
 	HttpOptions *Http     `json:"http_options,omitempty"`
+}
+
+func (ps *ApplicationScan) SetDefaults(scan *ScanMetaData) {
+	ps.IP = scan.IP
+	ps.RequestID = scan.RequestID
 }
 
 func (ps *ApplicationScan) GetStream() string {
