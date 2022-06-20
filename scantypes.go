@@ -1,5 +1,7 @@
 package scandaloriantypes
 
+type CustomMeta map[string]string
+
 type Scan interface {
 	SetDefaults(scan *ScanMetaData)
 	GetStream() string
@@ -7,19 +9,21 @@ type Scan interface {
 
 // ScanRequest object instructing system on how to scan.
 type ScanRequest struct {
-	Host            string            `json:"host"`
-	Company         string            `json:"company"`
-	PortScan        *PortScan         `json:"port_scan,omitempty"`
-	ApplicationScan *ApplicationScan  `json:"application_scan,omitempty"`
-	CustomMeta      map[string]string `json:"custom_meta,omitempty"`
+	Host            string           `json:"host"`
+	Company         string           `json:"company"`
+	FQDN            string           `json:"fqdn,omitempty"`
+	PortScan        *PortScan        `json:"port_scan,omitempty"`
+	ApplicationScan *ApplicationScan `json:"application_scan,omitempty"`
+	CustomMeta      CustomMeta       `json:"custom_meta,omitempty"`
 }
 
 // Scan structure to send to message queue for scanning
 type ScanMetaData struct {
-	IP        string `json:"ip"`
-	ScanID    string `json:"scan_id"`
-	RequestID string `json:"request_id"`
-	Stream    string `json:"-"`
+	IP         string     `json:"ip"`
+	Requestor  string     `json:"requestor"`
+	RequestID  string     `json:"request_id"`
+	CustomMeta CustomMeta `json:"custom_meta,omitempty"`
+	Stream     string     `json:"-"`
 }
 
 // Top level object to define a port scan
@@ -37,7 +41,6 @@ type PortScan struct {
 
 func (ps *PortScan) SetDefaults(scan *ScanMetaData) {
 	ps.IP = scan.IP
-	ps.ScanID = scan.ScanID
 	ps.RequestID = scan.RequestID
 }
 
@@ -56,10 +59,11 @@ type ApplicationScan struct {
 
 func (ps *ApplicationScan) SetDefaults(scan *ScanMetaData) {
 	ps.IP = scan.IP
-	ps.ScanID = scan.ScanID
 	ps.RequestID = scan.RequestID
 }
 
 func (ps *ApplicationScan) GetStream() string {
 	return applicationStream
 }
+
+//Top level struct to define RSA Cracker attempt
