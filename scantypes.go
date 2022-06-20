@@ -20,7 +20,6 @@ type ScanRequest struct {
 // Scan structure to send to message queue for scanning
 type ScanMetaData struct {
 	IP         string     `json:"ip"`
-	Domain     string     `json:"domain"`
 	Requestor  string     `json:"requestor"`
 	RequestID  string     `json:"request_id"`
 	CustomMeta CustomMeta `json:"custom_meta,omitempty"`
