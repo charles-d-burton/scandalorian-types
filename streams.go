@@ -1,9 +1,10 @@
 package scandaloriantypes
 
 const (
-	discoveryStream   = "discovery.requests"
-	reverseDNSStream  = "reversedns.requests"
-	applicationStream = "application.requests"
+	discoveryStream      = "discovery.requests"
+	reverseDNSStream     = "reversedns.requests"
+	applicationStream    = "application.requests"
+	hostEntrichmenStream = "hostinfo.requests"
 )
 
 func GetDiscoveryStream() string {
@@ -16,4 +17,8 @@ func GetReverseDNSStream() string {
 
 func GetApplicationStream() string {
 	return applicationStream
+}
+
+func GetHostInfoStream() string {
+	return hostEntrichmenStream
 }

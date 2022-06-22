@@ -19,11 +19,10 @@ type ScanRequest struct {
 
 // Scan structure to send to message queue for scanning
 type ScanMetaData struct {
-	IP         string     `json:"ip"`
-	Requestor  string     `json:"requestor"`
-	RequestID  string     `json:"request_id"`
-	CustomMeta CustomMeta `json:"custom_meta,omitempty"`
-	Stream     string     `json:"-"`
+	IP        string `json:"ip"`
+	Requestor string `json:"requestor"`
+	RequestID string `json:"request_id"`
+	Stream    string `json:"-"`
 }
 
 // Top level object to define a port scan
@@ -57,13 +56,28 @@ type ApplicationScan struct {
 	HttpOptions *Http     `json:"http_options,omitempty"`
 }
 
-func (ps *ApplicationScan) SetDefaults(scan *ScanMetaData) {
-	ps.IP = scan.IP
-	ps.RequestID = scan.RequestID
+func (as *ApplicationScan) SetDefaults(scan *ScanMetaData) {
+	as.IP = scan.IP
+	as.RequestID = scan.RequestID
 }
 
-func (ps *ApplicationScan) GetStream() string {
+func (as *ApplicationScan) GetStream() string {
 	return applicationStream
 }
 
 //Top level struct to define RSA Cracker attempt
+
+//Top level struct to define host information discovery
+type HostEnrichmentScan struct {
+	ScanMetaData
+	Domain     string     `json:"domain"`
+	CustomMeta CustomMeta `json:"custom_meta,omitempty"`
+}
+
+func (he *HostEnrichmentScan) SetDefaults(scan *ScanMetaData) {
+	//Nothing to do here, just satisfy the interface
+}
+
+func (he *HostEnrichmentScan) GetStream() string {
+	return hostEntrichmenStream
+}
